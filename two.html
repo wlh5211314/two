@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML File Viewer</title>
+    <style>
+        #contentContainer {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <input type="file" id="htmlFileInput" accept=".html, .htm">
+    
+    <script>
+        document.getElementById('htmlFileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(event) {
+                // Create a new div to hold the content
+                const div = document.createElement('div');
+                div.id = 'contentContainer';
+                
+                // Set the content (sanitized for security)
+                div.innerHTML = event.target.result;
+                
+                // Append to body
+                document.body.appendChild(div);
+            };
+            
+            reader.readAsText(file);
+        });
+    </script>
+</body>
+</html>
